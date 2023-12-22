@@ -209,20 +209,23 @@ li:hover {
 .filters {
   display: flex;
   justify-content: center;
-  margin-bottom: 2em;
-  font-size: 16px;
+  margin: 2.5em 2.5em 3em 2.5em;
+  padding-top: 1em;
+  font-size: 15px;
 }
 
 .filterSingle {
   color: #1d6154;
   text-decoration: none;
   background-color: white;
-  padding: 0.6em 1em 0.6em 1em;
+  padding: 0.5em 0.6em 0.5em 0.6em;
   margin: 0 0.4em 0em 0.4em;
   font-family: "Syne";
   font-weight: 700;
+  font-size: 16px;
   border: 1px solid #1d6154;
   border-radius: 50px;
+  min-width: 5em;
 }
 
 .selected {
