@@ -209,19 +209,26 @@ li:hover {
 .filters {
   display: flex;
   justify-content: center;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  font-size: 16px;
 }
 
-.filters h3 {
+.filterSingle {
   color: #1d6154;
-  font-size: 16px;
-  padding: 0.6em 2em 0.6em 2em;
-  margin: 0.5em;
+  text-decoration: none;
+  background-color: white;
+  padding: 0.6em 1em 0.6em 1em;
+  margin: 0 0.4em 0em 0.4em;
+  font-family: "Syne";
   font-weight: 700;
   border: 1px solid #1d6154;
   border-radius: 50px;
 }
 
+.selected {
+  background-color: #1d6154;
+  color: white;
+}
 /****** Gallery ******/
 
 .gallery {
