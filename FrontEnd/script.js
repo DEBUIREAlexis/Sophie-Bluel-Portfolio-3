@@ -1,5 +1,5 @@
 //Base script for the main page of Sophie Bluel's Portfolio
-//import {  } from "./.js";
+import { showModal } from "./modal.js";
 
 //Get Edit Token from local Storage
 const token = window.localStorage.getItem("token");
@@ -91,43 +91,6 @@ function addListenerFilters(worksListJson) {
 
       generateWorks(workByCategory);
     });
-  }
-}
-
-//Function Modal
-function showModal(worksListJson) {
-  const modalBody = document.querySelector(".edit");
-  const modifOpener = document.querySelector(".editLink");
-  const modalAdd = document.querySelector(".add");
-  modifOpener.addEventListener("click", function (event) {
-    event.preventDefault();
-    modalBody.classList.remove("hidden");
-  });
-  const closeCross = document.querySelector("#editModal .fa-xmark");
-  closeCross.addEventListener("click", () => {
-    modalBody.classList.add("hidden");
-  });
-  galleryModal(worksListJson);
-  const addNew = document.querySelector(".addNewWork");
-  addNew.addEventListener("click", () => {
-    modalBody.classList.add("hidden");
-    modalAdd.classList.remove("hidden");
-  });
-  const closeCrossAdd = document.querySelector("#addModal .fa-xmark");
-  closeCrossAdd.addEventListener("click", () => {
-    modalAdd.classList.add("hidden");
-  });
-  const returnArrow = document.querySelector("#addModal .fa-arrow-left");
-  returnArrow.addEventListener("click", () => {
-    modalAdd.classList.add("hidden");
-    modalBody.classList.remove("hidden");
-  });
-}
-
-//Modal Galery
-function galleryModal(worksListJson) {
-  for (let i = 0; i < worksListJson.length; i++) {
-    galleryIdividualWork(worksListJson[i]);
   }
 }
 
