@@ -1,5 +1,17 @@
 //Base script for the main page of Sophie Bluel's Portfolio
 //import {  } from "./.js";
+
+//Get Edit Token from local Storage
+const token = window.localStorage.getItem("token");
+console.log(token);
+const editMenu = document.querySelector(".editon");
+const loginLink = document.querySelector(".loginlink");
+if (token === null) {
+  editMenu.classList.add("hidden");
+} else {
+  editMenu.classList.remove("hidden");
+  loginLink.innerText = "Logout";
+}
 //Function that generate the HTML code for the works
 async function generateWorks(worksListJson) {
   // Loop to create HTML code for all works
@@ -84,10 +96,23 @@ function addListenerFilters(worksListJson) {
   }
 }
 
+//Function Modal
+function showModal() {
+  const modalBody = document.querySelector(".modal");
+  const modifOpener = document.querySelector(".editLink");
+  modifOpener.addEventListener("click", function (event) {
+    event.preventDefault();
+    modalBody.classList.remove("hidden");
+  });
+}
+
 // Main Script
 // Get the works from the database
 const worksList = await fetch("http://localhost:5678/api/works");
 const worksListJson = await worksList.json();
 generateWorks(worksListJson);
-generateFilters(worksListJson);
+if (token === null) {
+  generateFilters(worksListJson);
+}
 addListenerFilters(worksListJson);
+showModal();

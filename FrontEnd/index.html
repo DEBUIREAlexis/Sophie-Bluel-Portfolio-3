@@ -10,18 +10,26 @@
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/bad03fe0d8.js"
+      crossorigin="anonymous"
+    ></script>
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
     <script type="module" src="script.js"></script>
   </head>
   <body>
+    <div class="editon">
+      <i class="fa-regular fa-pen-to-square"></i>
+      <p>Mode Editeur</p>
+    </div>
     <header>
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
           <li>projets</li>
           <li>contact</li>
-          <li><a href="login.html">login</a></li>
+          <li><a href="login.html" class="loginlink">login</a></li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -52,6 +60,21 @@
       </section>
       <section id="portfolio">
         <h2>Mes Projets</h2>
+        <a href="#editModal" class="editLink">modifier</a>
+        <aside
+          id="editModal"
+          class="modal hidden"
+          aria-hidden="true"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="editModalTitle"
+        >
+          <div class="modal-wrapper">
+            <i class="fa-solid fa-xmark"></i>
+            <h3 id="editModalTitle">Galerie photo</h3>
+            <div class="galleryModif"></div>
+          </div>
+        </aside>
         <div class="gallery"></div>
       </section>
       <section id="contact">

@@ -1,27 +1,44 @@
 //Script who handle the log-in of a user
+//Remove Local Storage
+window.localStorage.removeItem("token");
 //Getting form input to check Regex and recover their value
 const emailForm = document.querySelector("#usermail");
 const passwordForm = document.querySelector("#userpassword");
-
+const regex = new RegExp("^[a-zA-Z0-9._-]+@[a-z0-9A-Z-]+\\.[a-z]+");
 const submitForm = document.querySelector("input[type=submit]");
-submitForm.addEventListener("click", function (event) {
+// Check with the Api if user + password valid
+submitForm.addEventListener("click", async function (event) {
   event.preventDefault();
   const userEmail = emailForm.value;
   const userPassword = passwordForm.value;
-  const logingIn = fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    body: JSON.stringify({
-      email: userEmail,
-      password: userPassword,
-    }),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+
+  if (regex.test(userEmail) && userPassword.length > 1) {
+    const logingIn = await fetch("http://localhost:5678/api/users/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: userEmail,
+        password: userPassword,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const response = await logingIn.json();
+    console.log(response);
+    if (response.message === "user not found") {
+      window.alert("L'utilisateur n'existe pas ou le mot de passe est erroné");
+    } else {
+      console.log("GG");
+      window.localStorage.setItem("token", response.token);
+      window.location.assign("index.html");
+    }
+  } else {
+    window.alert("Email ou Mot de passe invalide");
+  }
 });
 
+// Check if Email is a valid Mail
+/*
 emailForm.addEventListener("change", function () {
   const regex = new RegExp("^[a-zA-Z0-9._-]+@[a-z0-9A-Z-]+\\.[a-z]+");
   const emailValue = emailForm.value;
@@ -33,3 +50,12 @@ emailForm.addEventListener("change", function () {
   }
   console.log(emailValue);
 });
+
+passwordForm.addEventListener("change", () => {
+  const passwordValue = passwordForm.value;
+  if (passwordValue.length > 1) {
+    passwordForm.classList.remove("invalid");
+  } else {
+    passwordForm.classList.add("invalid");
+  }
+});*/
