@@ -78,8 +78,6 @@ function addListenerFilters(worksListJson) {
         allFilter[i].classList.remove("selected");
       }
       event.target.classList.add("selected");
-      /*const awnser = await fetch("http://localhost:5678/api/works");
-      const workByCategory = await awnser.json();*/
       const workByCategory = Array.from(worksListJson);
       const gallery = document.querySelector(".gallery");
       gallery.innerHTML = "";
@@ -97,13 +95,49 @@ function addListenerFilters(worksListJson) {
 }
 
 //Function Modal
-function showModal() {
-  const modalBody = document.querySelector(".modal");
+function showModal(worksListJson) {
+  const modalBody = document.querySelector(".edit");
   const modifOpener = document.querySelector(".editLink");
+  const modalAdd = document.querySelector(".add");
   modifOpener.addEventListener("click", function (event) {
     event.preventDefault();
     modalBody.classList.remove("hidden");
   });
+  const closeCross = document.querySelector("#editModal .fa-xmark");
+  closeCross.addEventListener("click", () => {
+    modalBody.classList.add("hidden");
+  });
+  galleryModal(worksListJson);
+  const addNew = document.querySelector(".addNewWork");
+  addNew.addEventListener("click", () => {
+    modalBody.classList.add("hidden");
+    modalAdd.classList.remove("hidden");
+  });
+  const closeCrossAdd = document.querySelector("#addModal .fa-xmark");
+  closeCrossAdd.addEventListener("click", () => {
+    modalAdd.classList.add("hidden");
+  });
+  const returnArrow = document.querySelector("#addModal .fa-arrow-left");
+  returnArrow.addEventListener("click", () => {
+    modalAdd.classList.add("hidden");
+    modalBody.classList.remove("hidden");
+  });
+}
+
+//Modal Galery
+function galleryModal(worksListJson) {
+  for (let i = 0; i < worksListJson.length; i++) {
+    galleryIdividualWork(worksListJson[i]);
+  }
+}
+
+function galleryIdividualWork(workSingle) {
+  const gallery = document.querySelector(".galleryModif");
+  const workBody = document.createElement("figure");
+  workBody.dataset.categoryId = workSingle.category.id;
+  workBody.innerHTML = `<img src="${workSingle.imageUrl}" alt="${workSingle.title}"/>
+  <i class="fa-solid fa-trash-can"></i>`;
+  gallery.appendChild(workBody);
 }
 
 // Main Script
@@ -115,4 +149,4 @@ if (token === null) {
   generateFilters(worksListJson);
 }
 addListenerFilters(worksListJson);
-showModal();
+showModal(worksListJson);

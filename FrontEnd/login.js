@@ -26,9 +26,8 @@ submitForm.addEventListener("click", async function (event) {
     const response = await logingIn.json();
     console.log(response);
     if (response.message === "user not found") {
-      window.alert("L'utilisateur n'existe pas ou le mot de passe est erroné");
+      window.alert("Erreur dans l’identifiant ou le mot de passe");
     } else {
-      console.log("GG");
       window.localStorage.setItem("token", response.token);
       window.location.assign("index.html");
     }

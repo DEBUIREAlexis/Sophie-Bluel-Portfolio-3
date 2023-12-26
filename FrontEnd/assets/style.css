@@ -352,13 +352,63 @@ section .hidden {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .modal-wrapper {
   background-color: white;
-  width: 600px;
-  max-width: calc(100vh - 20px);
-  max-height: calc(100vh - 20px);
-  padding: 20px;
+  width: 630px;
+  height: 680px;
+  padding: 50px 100px 50px 100px;
+  border-radius: 15px;
+}
+
+.modal-wrapper h3 {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.modal-wrapper .fa-xmark {
+  width: 100%;
+  text-align: end;
+  position: relative;
+  bottom: 30px;
+  left: 70px;
+  font-size: 1.4em;
+}
+
+.galleryModif {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  overflow: auto;
+}
+
+.galleryModif img {
+  width: 100%;
+}
+
+.galleryModif i {
+  position: relative;
+  bottom: 144px;
+  left: 84px;
+  color: white;
+  background-color: black;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+.inputAddWrapper {
+  display: flex;
+  border-top: 2px solid gray;
+  align-items: center;
+}
+
+.inputAddWrapper input {
+  border: none;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }

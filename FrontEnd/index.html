@@ -63,16 +63,53 @@
         <a href="#editModal" class="editLink">modifier</a>
         <aside
           id="editModal"
-          class="modal hidden"
+          class="modal hidden edit"
           aria-hidden="true"
           role="dialog"
           aria-modal="false"
           aria-labelledby="editModalTitle"
         >
           <div class="modal-wrapper">
-            <i class="fa-solid fa-xmark"></i>
+            <div class="iconesModal"><i class="fa-solid fa-xmark"></i></div>
+
             <h3 id="editModalTitle">Galerie photo</h3>
             <div class="galleryModif"></div>
+            <div class="inputAddWrapper">
+              <input
+                type="submit"
+                value="Ajouter une photo"
+                class="addNewWork"
+              />
+            </div>
+          </div>
+        </aside>
+        <aside
+          id="addModal"
+          class="modal hidden add"
+          aria-hidden="true"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="addModalTitle"
+        >
+          <div class="modal-wrapper">
+            <div class="iconesModal">
+              <i class="fa-solid fa-arrow-left"></i>
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+
+            <h3 id="addModalTitle">Ajout Photo</h3>
+            <input type="file" />
+            <label for="titre">Titre</label>
+            <input type="text" id="titre" name="titre" />
+            <label for="categorie">Catégorie</label>
+            <input type="text" id="categorie" name="categorie" />
+            <div class="inputAddValidateWrapper">
+              <input
+                type="submit"
+                value="Ajouter une photo"
+                class="addNewWork"
+              />
+            </div>
           </div>
         </aside>
         <div class="gallery"></div>
