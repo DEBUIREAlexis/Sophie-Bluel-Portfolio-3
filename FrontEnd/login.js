@@ -24,12 +24,13 @@ submitForm.addEventListener("click", async function (event) {
       },
     });
     const response = await logingIn.json();
+    console.log(logingIn);
     console.log(response);
-    if (response.message === "user not found") {
-      window.alert("Erreur dans l’identifiant ou le mot de passe");
-    } else {
+    if (logingIn.status === 200) {
       window.localStorage.setItem("token", response.token);
       window.location.assign("index.html");
+    } else {
+      window.alert("Erreur dans l’identifiant ou le mot de passe");
     }
   } else {
     window.alert("Email ou Mot de passe invalide");

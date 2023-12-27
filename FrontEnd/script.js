@@ -10,7 +10,8 @@ if (token === null) {
   editMenu.classList.add("hidden");
 } else {
   editMenu.classList.remove("hidden");
-  loginLink.innerText = "Logout";
+  loginLink.innerText = "logout";
+  showEditLink();
 }
 //Function that generate the HTML code for the works
 async function generateWorks(worksListJson) {
@@ -94,6 +95,16 @@ function addListenerFilters(worksListJson) {
   }
 }
 
+function showEditLink() {
+  const fatherTag = document.querySelector("#portfolio");
+  const beforeThis = document.querySelector(".gallery");
+  const editLink = document.createElement("a");
+  editLink.href = "#editModal";
+  editLink.classList.add("editLink");
+  editLink.innerHTML = `<i class="fa-regular fa-pen-to-square"></i>modifier`;
+  fatherTag.insertBefore(editLink, beforeThis);
+}
+
 function galleryIdividualWork(workSingle) {
   const gallery = document.querySelector(".galleryModif");
   const workBody = document.createElement("figure");
@@ -110,6 +121,7 @@ const worksListJson = await worksList.json();
 generateWorks(worksListJson);
 if (token === null) {
   generateFilters(worksListJson);
+} else {
+  showModal(worksListJson);
 }
 addListenerFilters(worksListJson);
-showModal(worksListJson);
