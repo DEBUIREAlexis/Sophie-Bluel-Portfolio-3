@@ -36,26 +36,3 @@ submitForm.addEventListener("click", async function (event) {
     window.alert("Email ou Mot de passe invalide");
   }
 });
-
-// Check if Email is a valid Mail
-/*
-emailForm.addEventListener("change", function () {
-  const regex = new RegExp("^[a-zA-Z0-9._-]+@[a-z0-9A-Z-]+\\.[a-z]+");
-  const emailValue = emailForm.value;
-  if (regex.test(emailValue)) {
-    console.log("bien");
-    emailForm.classList.remove("invalid");
-  } else {
-    emailForm.classList.add("invalid");
-  }
-  console.log(emailValue);
-});
-
-passwordForm.addEventListener("change", () => {
-  const passwordValue = passwordForm.value;
-  if (passwordValue.length > 1) {
-    passwordForm.classList.remove("invalid");
-  } else {
-    passwordForm.classList.add("invalid");
-  }
-});*/

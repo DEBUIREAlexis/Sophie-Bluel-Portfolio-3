@@ -40,6 +40,7 @@ function createModalAdd(worksListJson) {
     modalBody.remove();
     createModalEdit(worksListJson);
   });
+  addANewWork();
 }
 
 function modalBaseBody() {
@@ -88,15 +89,20 @@ function modalAddHtml() {
       <div class="addWorkWrapper">
         <div class="fileUploadWrapper">
           <i class="fa-regular fa-image"></i>
-          <label for="imageUpload" id="imageUploadLabel">+ Ajouter photo</label>
+          
           <input type="file" name="imageUpload" id="imageUpload" />
+          <label for="imageUpload" id="imageUploadLabel">+ Ajouter photo</label>
           <p>jpg, png : 4mo max</p>
         </div>
         <div class="titleAndCategory">
           <label for="titre">Titre</label>
           <input type="text" id="titre" name="titre" />
-          <label for="categorie">Catégorie</label>
-          <input type="text" id="categorie" name="categorie" />
+          <label for="category">Catégorie</label>
+          <select id="category" name="category">
+            <option value="1">Objets</option>
+            <option value="2">Appartements</option>
+            <option value="3">Hotels & restaurants</option>
+          </select>
         </div>
       </div>
       <div class="inputAddValidateWrapper">
@@ -114,7 +120,7 @@ function modalAddHtml() {
 function preventClosing() {
   const bodyBackgroundWhite = document.querySelector(".modalBody");
   bodyBackgroundWhite.addEventListener("click", (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
   });
@@ -141,8 +147,46 @@ function deleteWork() {
     allTrashCans[i].addEventListener("click", async () => {
       console.log(allTrashCans[i].dataset.id);
       const deleteWorkById = await fetch(
-        `http://localhost:5678/api/works/${allTrashCans[i].dataset.id}`
+        `http://localhost:5678/api/works/${allTrashCans[i].dataset.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json",
+            accept: "*/*",
+            Authorization: "Bearer " + window.localStorage.getItem("token"),
+          },
+        }
       );
+      console.log(deleteWorkById);
     });
   }
+}
+
+//Function to add a New work
+function addANewWork() {
+  const validateButton = document.querySelector(".addNewWork");
+  validateButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const title = document.querySelector("#titre");
+    const category = document.querySelector("#category");
+    const file = document.querySelector("#imageUpload");
+    console.log(title.value);
+    console.log(category.value);
+    console.log(file.value);
+    const sendWork = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title.value,
+        imageUrl: file.value,
+        categoryId: category.value,
+      }),
+      headers: {
+        accept: "application/json",
+        "Content-type": "multipart/form-data",
+        Authorization: "Bearer " + window.localStorage.getItem("token"),
+      },
+    });
+
+    console.log(sendWork);
+  });
 }
