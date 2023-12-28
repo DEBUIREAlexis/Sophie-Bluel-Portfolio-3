@@ -11,6 +11,7 @@ function createModalEdit(worksListJson) {
   modalBaseBody();
   const modalBody = document.querySelector(".modal");
   modalBody.innerHTML = modalEditHtml();
+  preventClosing();
   const closeCross = document.querySelector(".fa-xmark");
   closeCross.addEventListener("click", () => {
     modalBody.remove();
@@ -22,12 +23,14 @@ function createModalEdit(worksListJson) {
     createModalAdd(worksListJson);
   });
   galleryModal(worksListJson);
+  deleteWork();
 }
 
 function createModalAdd(worksListJson) {
   modalBaseBody();
   const modalBody = document.querySelector(".modal");
   modalBody.innerHTML = modalAddHtml();
+  preventClosing();
   const closeCross = document.querySelector(".fa-xmark");
   closeCross.addEventListener("click", () => {
     modalBody.remove();
@@ -108,6 +111,15 @@ function modalAddHtml() {
   return HTMLcode;
 }
 
+function preventClosing() {
+  const bodyBackgroundWhite = document.querySelector(".modalBody");
+  bodyBackgroundWhite.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  });
+}
+
 //Modal Galery
 function galleryModal(worksListJson) {
   for (let i = 0; i < worksListJson.length; i++) {
@@ -119,6 +131,18 @@ function galleryIdividualWork(workSingle) {
   const galleryEdit = document.querySelector(".galleryModif");
   const workBody = document.createElement("figure");
   workBody.dataset.categoryId = workSingle.category.id;
-  workBody.innerHTML = `<img src="${workSingle.imageUrl}" alt="${workSingle.title}"/><i class="fa-solid fa-trash-can"></i>`;
+  workBody.innerHTML = `<img src="${workSingle.imageUrl}" alt="${workSingle.title}"/><i class="fa-solid fa-trash-can" data-id="${workSingle.id}"></i>`;
   galleryEdit.appendChild(workBody);
+}
+
+function deleteWork() {
+  const allTrashCans = document.querySelectorAll(".fa-trash-can");
+  for (let i = 0; i < allTrashCans.length; i++) {
+    allTrashCans[i].addEventListener("click", async () => {
+      console.log(allTrashCans[i].dataset.id);
+      const deleteWorkById = await fetch(
+        `http://localhost:5678/api/works/${allTrashCans[i].dataset.id}`
+      );
+    });
+  }
 }
