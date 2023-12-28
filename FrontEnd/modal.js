@@ -45,6 +45,9 @@ function modalBaseBody() {
   const modalBody = document.createElement("aside");
   sectionFather.insertBefore(modalBody, beforeGallery);
   modalBody.classList.add("modal");
+  modalBody.addEventListener("click", () => {
+    modalBody.remove();
+  });
 }
 
 function modalEditHtml() {
@@ -79,20 +82,24 @@ function modalAddHtml() {
  
 
       <h3 id="addModalTitle">Ajout Photo</h3>
-      <div class="fileUploadWrapper">
-        <i class="fa-regular fa-image"></i>
-        <label for="imageUpload">+ Ajouter photo</label>
-        <input type="file" name="imageUpload" id="imageUpload"/>
-        <p>jpg, png : 4mo max</p>
+      <div class="addWorkWrapper">
+        <div class="fileUploadWrapper">
+          <i class="fa-regular fa-image"></i>
+          <label for="imageUpload" id="imageUploadLabel">+ Ajouter photo</label>
+          <input type="file" name="imageUpload" id="imageUpload" />
+          <p>jpg, png : 4mo max</p>
+        </div>
+        <div class="titleAndCategory">
+          <label for="titre">Titre</label>
+          <input type="text" id="titre" name="titre" />
+          <label for="categorie">Catégorie</label>
+          <input type="text" id="categorie" name="categorie" />
+        </div>
       </div>
-      <label for="titre">Titre</label>
-      <input type="text" id="titre" name="titre" />
-      <label for="categorie">Catégorie</label>
-      <input type="text" id="categorie" name="categorie" />
       <div class="inputAddValidateWrapper">
         <input
           type="submit"
-          value="Ajouter une photo"
+          value="Valider"
           class="addNewWork"
         />
       </div>

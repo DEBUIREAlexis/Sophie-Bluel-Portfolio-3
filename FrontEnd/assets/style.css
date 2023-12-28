@@ -105,9 +105,6 @@ nav,
 section {
   display: block;
 }
-body {
-  line-height: 1;
-}
 ol,
 ul {
   list-style: none;
@@ -130,13 +127,22 @@ table {
 /** end reset css**/
 html {
   min-height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  overflow-y: scroll;
 }
 
 body {
   /*max-width: 1140px;
-  margin: auto;*/
+  margin: auto;
+    font-size: 14px;
+  line-height: 1;*/
   font-family: "Work Sans";
-  font-size: 14px;
+  min-height: 100vh;
+  max-width: 100vw;
+
+  display: flex;
+  flex-direction: column;
 }
 
 main {
@@ -147,9 +153,10 @@ main {
 header {
   display: flex;
   justify-content: space-between;
-
-  max-width: 1140px;
-  margin: 50px auto auto auto;
+  width: 1140px;
+  margin: 0 auto 0 auto;
+  padding-top: 50px;
+  font-size: 14px;
 }
 section {
   margin: 50px 0;
@@ -231,11 +238,17 @@ a:hover {
 
 #introduction p {
   margin-bottom: 0.5em;
+  font-size: 14px;
 }
 
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
+}
+
+#portfolio figcaption,
+#contact p {
+  font-size: 14px;
 }
 
 /****** Filters ******/
@@ -335,20 +348,17 @@ input[type="submit"] {
   box-shadow: 0px 4px 14px rgba(255, 0, 0, 0.4);
 }
 
+footer {
+  font-size: 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+}
+
 .footerNav {
   width: auto;
-}
-
-.footerNavlogin {
-  width: auto;
-  position: relative;
-  top: 272px;
-}
-
-footer nav ul {
-  display: flex;
-  justify-content: flex-end;
-  margin: 2em 4em 2em 0;
+  padding: 0 80px 24px 0;
 }
 
 /****** CSS for Login page ******/
@@ -409,6 +419,8 @@ section .hidden {
   width: 630px;
   height: 688px;
   border-radius: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .iconesModal {
@@ -422,7 +434,11 @@ section .hidden {
 }
 
 .modal-wrapper {
-  padding: 50px 100px 50px 100px;
+  padding: 0 100px 0px 100px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .modal-wrapper h3 {
@@ -448,7 +464,6 @@ section .hidden {
   grid-row-gap: 20px;
   overflow-y: auto;
   overflow-x: hidden;
-  margin-bottom: 40px;
 }
 
 .galleryModif img {
@@ -465,14 +480,80 @@ section .hidden {
   border-radius: 5px;
 }
 
-.inputAddWrapper {
+.addWorkWrapper {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.fileUploadWrapper {
+  background-color: rgb(223, 232, 245);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 4px;
+  height: 35%;
+}
+
+.titleAndCategory {
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleAndCategory input {
+  height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.titleAndCategory label {
+  margin: 2em 0 1em 0;
+}
+.titleAndCategory textarea {
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.fileUploadWrapper i {
+  color: grey;
+  font-size: 4em;
+  margin: 20px 0 12px 0;
+}
+
+.fileUploadWrapper label {
+  background-color: grey;
+  padding: 8px 28px 8px 28px;
+  border-radius: 50px;
+  color: rgb(62, 98, 149);
+}
+
+.addWorkWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileUploadWrapper p {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.inputAddWrapper,
+.inputAddValidateWrapper {
   display: flex;
   border-top: 2px solid gray;
   align-items: center;
+  height: 20%;
 }
 
-.inputAddWrapper input {
+.inputAddWrapper input,
+.inputAddValidateWrapper input {
   border: none;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
+}
+
+#imageUpload {
+  display: none;
 }
