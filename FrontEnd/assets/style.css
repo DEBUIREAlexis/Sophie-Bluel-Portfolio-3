@@ -435,6 +435,13 @@ section .hidden {
 
 .modal-wrapper {
   padding: 0 100px 0px 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.formWrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -502,11 +509,16 @@ section .hidden {
   flex-direction: column;
 }
 
-.titleAndCategory input {
+.titleAndCategory input,
+.titleAndCategory select {
   height: 50px;
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.titleAndCategory select:active {
+  outline: none;
+  border: none;
 }
 .titleAndCategory label {
   margin: 2em 0 1em 0;

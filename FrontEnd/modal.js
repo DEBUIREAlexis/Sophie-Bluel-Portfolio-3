@@ -58,9 +58,8 @@ function modalEditHtml() {
   const HTMLcode = `
   <div class="modalBody">
   <div class="iconesModal"><p></p><i class="fa-solid fa-xmark"></i></div>
-    <div class="modal-wrapper">
-      
-
+    
+  <div class="modal-wrapper">
       <h3 id="editModalTitle">Galerie photo</h3>
       <div class="galleryModif"></div>
       <div class="inputAddWrapper">
@@ -83,14 +82,14 @@ function modalAddHtml() {
       <i class="fa-solid fa-xmark"></i>
     </div>
     <div class="modal-wrapper">
- 
-
+  
       <h3 id="addModalTitle">Ajout Photo</h3>
+    <form method="post" enctype="multipart/form-data" name="imageForm" class="formWrapper">
       <div class="addWorkWrapper">
         <div class="fileUploadWrapper">
           <i class="fa-regular fa-image"></i>
           
-          <input type="file" name="imageUpload" id="imageUpload" />
+          <input type="file" name="imageUpload" id="imageUpload" accept="image/png"/>
           <label for="imageUpload" id="imageUploadLabel">+ Ajouter photo</label>
           <p>jpg, png : 4mo max</p>
         </div>
@@ -112,6 +111,7 @@ function modalAddHtml() {
           class="addNewWork"
         />
       </div>
+      </form>
     </div>
   </div>`;
   return HTMLcode;
@@ -162,31 +162,26 @@ function deleteWork() {
   }
 }
 
-//Function to add a New work
+//Function to add a new work
 function addANewWork() {
-  const validateButton = document.querySelector(".addNewWork");
-  validateButton.addEventListener("click", async (e) => {
-    e.preventDefault();
+  const form = document.forms.namedItem("imageForm");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
     const title = document.querySelector("#titre");
     const category = document.querySelector("#category");
     const file = document.querySelector("#imageUpload");
-    console.log(title.value);
-    console.log(category.value);
-    console.log(file.value);
+    console.log(file.files[0]);
+    const formData = new FormData();
+    formData.append("image", file.files[0]);
+    formData.append("title", title.value);
+    formData.append("category", category.value);
     const sendWork = await fetch("http://localhost:5678/api/works", {
       method: "POST",
-      body: JSON.stringify({
-        title: title.value,
-        imageUrl: file.value,
-        categoryId: category.value,
-      }),
       headers: {
-        accept: "application/json",
-        "Content-type": "multipart/form-data",
         Authorization: "Bearer " + window.localStorage.getItem("token"),
       },
+      body: formData,
     });
-
-    console.log(sendWork);
   });
 }
