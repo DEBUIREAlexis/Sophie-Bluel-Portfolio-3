@@ -1,9 +1,12 @@
+import { generateWorks, addListenerFilters } from "./gallery.js";
+
 //Function Modal
-export function showModal(worksListJson) {
+export function showModal() {
   const linkModal = document.querySelector(".editLink");
   linkModal.addEventListener("click", (event) => {
     event.preventDefault();
-    createModalEdit(worksListJson);
+    const arrayWorks = JSON.parse(window.localStorage.getItem("arrayWorks"));
+    createModalEdit(arrayWorks);
   });
 }
 
@@ -98,6 +101,7 @@ function modalAddHtml() {
           <input type="text" id="titre" name="titre" />
           <label for="category">Catégorie</label>
           <select id="category" name="category">
+            <option disabled selected value></option>
             <option value="1">Objets</option>
             <option value="2">Appartements</option>
             <option value="3">Hotels & restaurants</option>
@@ -108,7 +112,8 @@ function modalAddHtml() {
         <input
           type="submit"
           value="Valider"
-          class="addNewWork"
+          class="addNewWork disabled"
+          disabled=true
         />
       </div>
       </form>
@@ -144,8 +149,9 @@ function galleryIdividualWork(workSingle) {
 function deleteWork() {
   const allTrashCans = document.querySelectorAll(".fa-trash-can");
   for (let i = 0; i < allTrashCans.length; i++) {
-    allTrashCans[i].addEventListener("click", async () => {
+    allTrashCans[i].addEventListener("click", async (event) => {
       console.log(allTrashCans[i].dataset.id);
+      const idDelete = allTrashCans[i].dataset.id;
       const deleteWorkById = await fetch(
         `http://localhost:5678/api/works/${allTrashCans[i].dataset.id}`,
         {
@@ -157,21 +163,93 @@ function deleteWork() {
           },
         }
       );
+      if (deleteWorkById.status === 204) {
+        deleteFromModif(event, idDelete);
+        deleteFromGalery(idDelete);
+      }
       console.log(deleteWorkById);
     });
   }
 }
 
+//Delete from modif List
+function deleteFromModif(event, idDelete) {
+  const newArrayOfWork = JSON.parse(window.localStorage.getItem("arrayWorks"));
+  console.log(newArrayOfWork);
+  for (let i = newArrayOfWork.length - 1; i >= 0; i--) {
+    if (newArrayOfWork[i].id == idDelete) {
+      newArrayOfWork.splice([i], 1);
+      const figureToDelete = event.target.parentElement;
+      console.log(event.target.parentElement);
+      figureToDelete.remove();
+      console.log("Ok");
+    }
+  }
+  window.localStorage.setItem("arrayWorks", JSON.stringify(newArrayOfWork));
+}
+
+//Delete form the main gallery
+function deleteFromGalery(idDelete) {
+  const listWorks = document.querySelectorAll(".gallery figure");
+  for (let i = listWorks.length - 1; i > 0; i--) {
+    console.log(listWorks[i].dataset.workId);
+    if (listWorks[i].dataset.workId == idDelete) {
+      listWorks[i].remove();
+      console.log("hello");
+    }
+  }
+}
+
 //Function to add a new work
 function addANewWork() {
+  const imageShow = document.querySelector("#imageUpload");
+  imageShow.addEventListener("change", () => {
+    const fileWrapper = document.querySelector(".fileUploadWrapper");
+    const imageURL = imageShow.files[0];
+    console.log(imageURL);
+    const iRemove = document.querySelector(".fa-image");
+    iRemove.remove();
+    const labelRemove = document.querySelector("#imageUploadLabel");
+    labelRemove.remove();
+    const pRemove = document.querySelector(".fileUploadWrapper p");
+    pRemove.remove();
+    const imageDisplay = document.createElement("img");
+    imageDisplay.src = URL.createObjectURL(imageURL);
+    fileWrapper.appendChild(imageDisplay);
+    checkIfValueAdded();
+  });
+  const titleChange = document.querySelector("#titre");
+  titleChange.addEventListener("change", () => {
+    checkIfValueAdded();
+  });
+  const categoryChange = document.querySelector("#category");
+  categoryChange.addEventListener("change", () => {
+    checkIfValueAdded();
+  });
+}
+
+function checkIfValueAdded() {
+  const imgExist = document.querySelector(".fileUploadWrapper img");
+  const titleExist = document.querySelector("#titre").value;
+  const categoryExist = document.querySelector("#category").value;
+  const submitButton = document.querySelector(".addNewWork");
+  if (imgExist !== null && titleExist !== "" && categoryExist !== "") {
+    submitButton.classList.remove("disabled");
+    submitButton.disabled = false;
+    submitNewWork();
+  } else {
+    submitButton.classList.add("disabled");
+    submitButton.disabled = true;
+  }
+}
+
+function submitNewWork() {
   const form = document.forms.namedItem("imageForm");
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-
     const title = document.querySelector("#titre");
     const category = document.querySelector("#category");
     const file = document.querySelector("#imageUpload");
-    console.log(file.files[0]);
     const formData = new FormData();
     formData.append("image", file.files[0]);
     formData.append("title", title.value);
@@ -183,5 +261,19 @@ function addANewWork() {
       },
       body: formData,
     });
+    console.log(sendWork);
+    if (sendWork.status === 201) {
+      addingNoReload();
+    }
   });
+}
+
+//Adding new works without reload
+// It has to make a call to the Api, it provide the id of the new work
+async function addingNoReload() {
+  const worksList = await fetch("http://localhost:5678/api/works");
+  const worksListJson = await worksList.json();
+  const token = window.localStorage.getItem("token");
+  generateWorks(worksListJson);
+  window.localStorage.setItem("arrayWorks", JSON.stringify(worksListJson));
 }

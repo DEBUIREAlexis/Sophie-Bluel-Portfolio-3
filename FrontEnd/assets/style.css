@@ -500,7 +500,12 @@ section .hidden {
   flex-direction: column;
   align-items: center;
   border-radius: 4px;
-  height: 35%;
+  min-height: 169px;
+  max-height: 169px;
+}
+
+.fileUploadWrapper img {
+  max-height: 100%;
 }
 
 .titleAndCategory {
@@ -568,4 +573,8 @@ section .hidden {
 
 #imageUpload {
   display: none;
+}
+
+.inputAddValidateWrapper .disabled {
+  background-color: gray;
 }
