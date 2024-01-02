@@ -238,6 +238,8 @@ function addANewWork() {
   categoryChange.addEventListener("change", () => {
     checkIfValueAdded();
   });
+
+  submitNewWork();
 }
 //Function to check in the uploaded image is a PNG
 function getExtension(file) {
@@ -269,7 +271,6 @@ function checkIfValueAdded() {
   if (imgExist !== null && titleExist !== "" && categoryExist !== "") {
     submitButton.classList.remove("disabled");
     submitButton.disabled = false;
-    submitNewWork();
   } else {
     submitButton.classList.add("disabled");
     submitButton.disabled = true;

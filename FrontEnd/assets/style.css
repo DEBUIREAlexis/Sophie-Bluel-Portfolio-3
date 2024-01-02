@@ -481,8 +481,8 @@ section .hidden {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-column-gap: 16px;
-  grid-row-gap: 20px;
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
   overflow-y: auto;
   overflow-x: hidden;
 }
