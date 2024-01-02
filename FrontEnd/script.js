@@ -1,6 +1,10 @@
 //Base script for the main page of Sophie Bluel's Portfolio
 import { showModal } from "./modal.js";
-import { generateWorks, addListenerFilters } from "./gallery.js";
+import {
+  generateWorks,
+  addListenerFilters,
+  generateFilters,
+} from "./gallery.js";
 
 //Get Edit Token from local Storage
 const token = window.localStorage.getItem("token");

@@ -9,7 +9,7 @@ export async function generateWorks(worksListJson) {
 }
 
 // Recover all categories to use them as filter
-function generateFilters(worksListJson) {
+export function generateFilters(worksListJson) {
   //Memorise the categories of all works, manually adding filter :"Tous"
   const categorysOfWorks = new Set();
   categorysOfWorks.add("Tous");

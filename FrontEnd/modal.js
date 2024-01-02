@@ -5,12 +5,11 @@ export function showModal() {
   const linkModal = document.querySelector(".editLink");
   linkModal.addEventListener("click", (event) => {
     event.preventDefault();
-    const arrayWorks = JSON.parse(window.localStorage.getItem("arrayWorks"));
-    createModalEdit(arrayWorks);
+    createModalEdit();
   });
 }
 
-function createModalEdit(worksListJson) {
+function createModalEdit() {
   modalBaseBody();
   const modalBody = document.querySelector(".modal");
   modalBody.innerHTML = modalEditHtml();
@@ -23,13 +22,14 @@ function createModalEdit(worksListJson) {
   addProject.addEventListener("click", (event) => {
     event.preventDefault();
     modalBody.remove();
-    createModalAdd(worksListJson);
+    createModalAdd();
   });
-  galleryModal(worksListJson);
+
+  galleryModal();
   deleteWork();
 }
 
-function createModalAdd(worksListJson) {
+function createModalAdd() {
   modalBaseBody();
   const modalBody = document.querySelector(".modal");
   modalBody.innerHTML = modalAddHtml();
@@ -41,7 +41,7 @@ function createModalAdd(worksListJson) {
   const returnArrow = document.querySelector(".fa-arrow-left");
   returnArrow.addEventListener("click", () => {
     modalBody.remove();
-    createModalEdit(worksListJson);
+    createModalEdit();
   });
   addANewWork();
 }
@@ -92,7 +92,7 @@ function modalAddHtml() {
         <div class="fileUploadWrapper">
           <i class="fa-regular fa-image"></i>
           
-          <input type="file" name="imageUpload" id="imageUpload" accept="image/png"/>
+          <input type="file" name="imageUpload" id="imageUpload" accept=".png"/>
           <label for="imageUpload" id="imageUploadLabel">+ Ajouter photo</label>
           <p>jpg, png : 4mo max</p>
         </div>
@@ -100,12 +100,15 @@ function modalAddHtml() {
           <label for="titre">Titre</label>
           <input type="text" id="titre" name="titre" />
           <label for="category">Catégorie</label>
-          <select id="category" name="category">
-            <option disabled selected value></option>
-            <option value="1">Objets</option>
-            <option value="2">Appartements</option>
-            <option value="3">Hotels & restaurants</option>
-          </select>
+          <div class="categoryAndArrow">
+            <select id="category" name="category">
+              <option disabled selected value></option>
+              <option value="1">Objets</option>
+              <option value="2">Appartements</option>
+              <option value="3">Hotels & restaurants</option>
+            </select>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
         </div>
       </div>
       <div class="inputAddValidateWrapper">
@@ -132,9 +135,12 @@ function preventClosing() {
 }
 
 //Modal Galery
-function galleryModal(worksListJson) {
-  for (let i = 0; i < worksListJson.length; i++) {
-    galleryIdividualWork(worksListJson[i]);
+function galleryModal() {
+  const worksListJsonFromLocal = JSON.parse(
+    window.localStorage.getItem("arrayWorks")
+  );
+  for (let i = 0; i < worksListJsonFromLocal.length; i++) {
+    galleryIdividualWork(worksListJsonFromLocal[i]);
   }
 }
 
@@ -204,19 +210,25 @@ function deleteFromGalery(idDelete) {
 function addANewWork() {
   const imageShow = document.querySelector("#imageUpload");
   imageShow.addEventListener("change", () => {
-    const fileWrapper = document.querySelector(".fileUploadWrapper");
-    const imageURL = imageShow.files[0];
-    console.log(imageURL);
-    const iRemove = document.querySelector(".fa-image");
-    iRemove.remove();
-    const labelRemove = document.querySelector("#imageUploadLabel");
-    labelRemove.remove();
-    const pRemove = document.querySelector(".fileUploadWrapper p");
-    pRemove.remove();
-    const imageDisplay = document.createElement("img");
-    imageDisplay.src = URL.createObjectURL(imageURL);
-    fileWrapper.appendChild(imageDisplay);
-    checkIfValueAdded();
+    if (getSize(imageShow.files[0])) {
+      window.alert("Image trop lourde : 4Mo maximum");
+    } else if (!getExtension(imageShow.files[0])) {
+      window.alert("Format d'image invalide, .png requis");
+    } else {
+      const fileWrapper = document.querySelector(".fileUploadWrapper");
+      const imageURL = imageShow.files[0];
+      console.log(imageURL);
+      const iRemove = document.querySelector(".fa-image");
+      iRemove.remove();
+      const labelRemove = document.querySelector("#imageUploadLabel");
+      labelRemove.remove();
+      const pRemove = document.querySelector(".fileUploadWrapper p");
+      pRemove.remove();
+      const imageDisplay = document.createElement("img");
+      imageDisplay.src = URL.createObjectURL(imageURL);
+      fileWrapper.appendChild(imageDisplay);
+      checkIfValueAdded();
+    }
   });
   const titleChange = document.querySelector("#titre");
   titleChange.addEventListener("change", () => {
@@ -227,7 +239,28 @@ function addANewWork() {
     checkIfValueAdded();
   });
 }
+//Function to check in the uploaded image is a PNG
+function getExtension(file) {
+  const extension = file.name.split(".");
+  console.log(extension);
+  if (extension[extension.length - 1] === "png") {
+    return true;
+  } else {
+    return false;
+  }
+}
 
+function getSize(file) {
+  const size = file.size;
+  console.log(size);
+  if (size > 4000000) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//Function to check if all values are not null
 function checkIfValueAdded() {
   const imgExist = document.querySelector(".fileUploadWrapper img");
   const titleExist = document.querySelector("#titre").value;
@@ -264,6 +297,8 @@ function submitNewWork() {
     console.log(sendWork);
     if (sendWork.status === 201) {
       addingNoReload();
+      const modal = document.querySelector("aside");
+      modal.remove();
     }
   });
 }
