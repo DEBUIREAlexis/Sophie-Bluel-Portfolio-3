@@ -339,6 +339,11 @@ a:hover {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
+#contact input[type="submit"],
+#loginform input[type="submit"] {
+  height: 36px;
+}
 #contact label,
 #loginform label {
   margin: 40px 0 7px 0;
