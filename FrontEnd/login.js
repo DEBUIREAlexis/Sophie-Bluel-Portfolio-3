@@ -6,6 +6,8 @@ const emailForm = document.querySelector("#usermail");
 const passwordForm = document.querySelector("#userpassword");
 const regex = new RegExp("^[a-zA-Z0-9._-]+@[a-z0-9A-Z-]+\\.[a-z]+");
 const submitForm = document.querySelector("input[type=submit]");
+mailChange(regex);
+passwordChange();
 // Check with the Api if user + password valid
 submitForm.addEventListener("click", async function (event) {
   event.preventDefault();
@@ -24,15 +26,68 @@ submitForm.addEventListener("click", async function (event) {
       },
     });
     const response = await logingIn.json();
-    console.log(logingIn);
-    console.log(response);
     if (logingIn.status === 200) {
       window.localStorage.setItem("token", response.token);
       window.location.assign("index.html");
     } else {
-      window.alert("Erreur dans l’identifiant ou le mot de passe");
+      const failToConnect = document.querySelector(".failToConnect");
+      failToConnect.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
     }
   } else {
-    window.alert("Email ou Mot de passe invalide");
+    if (userEmail === "") {
+      invalidEmail(true);
+    }
+    if (userPassword === "") {
+      invalidPassword(true);
+    }
   }
 });
+
+//Check if change in mail
+function mailChange(regex) {
+  const mail = document.querySelector("#usermail");
+  mail.addEventListener("change", () => {
+    const failToConnect = document.querySelector(".failToConnect");
+    failToConnect.innerHTML = "";
+    if (!regex.test(mail.value)) {
+      invalidEmail(true);
+    } else {
+      invalidEmail(false);
+    }
+  });
+}
+
+//Function to display an error if the email is invalid, and delete if OK
+function invalidEmail(bool) {
+  const displayMsg = document.querySelector(".inEmail");
+  if (bool) {
+    displayMsg.innerHTML = "<span>Mail invalide</span>";
+  } else {
+    displayMsg.innerHTML = "";
+  }
+}
+
+//Check if change in Password
+function passwordChange() {
+  const password = document.querySelector("#userpassword");
+
+  password.addEventListener("change", () => {
+    const failToConnect = document.querySelector(".failToConnect");
+    failToConnect.innerHTML = "";
+    if (password.value.length < 2) {
+      invalidPassword(true);
+    } else {
+      invalidPassword(false);
+    }
+  });
+}
+
+//Function to display if password invalid : less than 2 character, and delete if OK
+function invalidPassword(bool) {
+  const displayMsg = document.querySelector(".inPassword");
+  if (bool) {
+    displayMsg.innerHTML = "<span>Mot de passe invalide</span>";
+  } else {
+    displayMsg.innerHTML = "";
+  }
+}

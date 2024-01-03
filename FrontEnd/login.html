@@ -36,14 +36,16 @@
         <form action="#" method="post">
           <label for="usermail">E-mail</label>
           <input type="email" name="usermail" id="usermail" required />
-          <label for="userpassword">Mot de passe</label>
+          <div class="displayError inEmail"></div>
+          <label for="userpassword" class="passwordLogin">Mot de passe</label>
           <input
             type="password"
             name="userpassword"
             id="userpassword"
             required
           />
-
+          <div class="displayError inPassword"></div>
+          <div class="displayError failToConnect"></div>
           <input type="submit" value="Se connecter" />
           <p><a>Mot de passe oublié</a></p>
         </form>

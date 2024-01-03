@@ -133,12 +133,8 @@ html {
 }
 
 body {
-  /*max-width: 1140px;
-  margin: auto;
-    font-size: 14px;
-  line-height: 1;*/
   font-family: "Work Sans";
-  min-height: 100vh;
+  min-height: 1024px;
   max-width: 100vw;
 
   display: flex;
@@ -168,13 +164,14 @@ h1 {
   font-family: "Syne";
   font-size: 22px;
   font-weight: 800;
-  color: #b1663c;
+  color: #93532f;
 }
 
 h1 > span {
   font-family: "Work Sans";
   font-size: 10px;
   letter-spacing: 0.1em;
+  color: #b1663c;
 }
 
 h2 {
@@ -185,8 +182,10 @@ h2 {
 }
 
 nav {
-  width: 28%;
+  display: flex;
+  align-items: center;
 }
+
 nav ul {
   display: flex;
   align-items: center;
@@ -194,13 +193,15 @@ nav ul {
   justify-content: space-between;
 }
 nav li {
-  padding: 0 10px;
+  padding-left: 44px;
   font-size: 1.2em;
+  display: flex;
+  align-items: center;
 }
 
 nav li img {
-  height: 1em;
-  width: 1em;
+  height: 22px;
+  width: 22px;
 }
 
 nav li a {
@@ -215,7 +216,7 @@ a:hover {
 #introduction {
   display: flex;
   align-items: center;
-  margin: 0 auto 100px auto;
+  margin: 0 auto 139px auto;
 }
 #introduction figure {
   flex: 1;
@@ -233,17 +234,17 @@ a:hover {
   max-width: 50%;
 }
 #introduction h2 {
-  margin-bottom: 1em;
+  margin-bottom: 19px;
 }
 
 #introduction p {
   margin-bottom: 0.5em;
   font-size: 14px;
+  font-weight: 400;
 }
 
 #portfolio h2 {
   text-align: center;
-  margin-bottom: 1em;
 }
 
 #portfolio figcaption,
@@ -259,8 +260,7 @@ a:hover {
 .filters {
   display: flex;
   justify-content: center;
-  margin: 2.5em 2.5em 3em 2.5em;
-  padding-top: 1em;
+  margin: 51px 0;
   font-size: 15px;
 }
 
@@ -268,14 +268,14 @@ a:hover {
   color: #1d6154;
   text-decoration: none;
   background-color: white;
-  padding: 0.5em 0.6em 0.5em 0.6em;
-  margin: 0 0.4em 0em 0.4em;
+  padding: 9px;
+  margin: 0 5px;
   font-family: "Syne";
   font-weight: 700;
   font-size: 16px;
   border: 1px solid #1d6154;
   border-radius: 50px;
-  min-width: 5em;
+  min-width: 100px;
 }
 
 .selected {
@@ -295,9 +295,18 @@ a:hover {
 .gallery img {
   width: 100%;
 }
+
+#loginform {
+  padding-top: 50px;
+}
+
+#loginform form label {
+  margin-top: 30px;
+}
+
 #contact,
 #loginform {
-  width: 40%;
+  width: 379px;
   margin: auto;
 }
 #contact > *,
@@ -306,7 +315,7 @@ a:hover {
 }
 #contact h2,
 #loginform h2 {
-  margin-bottom: 20px;
+  margin-bottom: 9px;
 }
 #contact form,
 #loginform form {
@@ -319,22 +328,26 @@ a:hover {
 #loginform form p {
   text-align: center;
   text-decoration: underline;
+  margin-top: 28px;
+  font-size: 14px;
 }
 
 #contact input,
 #loginform input {
-  height: 50px;
-  font-size: 1.2em;
+  height: 49px;
+  font-size: 14px;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 #contact label,
 #loginform label {
-  margin: 2em 0 1em 0;
+  margin: 40px 0 7px 0;
 }
 #contact textarea {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  height: 170px;
+  resize: none;
 }
 
 input[type="submit"] {
@@ -342,31 +355,47 @@ input[type="submit"] {
   font-weight: 700;
   color: white;
   background-color: #1d6154;
-  margin: 2em auto;
+  margin: 40px auto 0 auto;
   width: 180px;
   text-align: center;
   border-radius: 60px;
 }
 
-input[type="submit"]:hover {
-  background-color: #10332d;
+#loginform .passwordLogin {
+  margin-top: 14px;
+}
+
+#loginform input[type="submit"] {
+  margin-top: 5px;
+}
+f input[type="submit"]:hover {
+  background-color: #0e2f28;
 }
 
 #loginform .invalid {
   box-shadow: 0px 4px 14px rgba(255, 0, 0, 0.4);
 }
 
+.displayError {
+  min-height: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: red;
+  font-family: "Work sans";
+}
+
 footer {
   font-size: 14px;
-  flex: 1;
   display: flex;
+  flex: 1;
   flex-direction: row-reverse;
   align-items: flex-end;
+  margin-top: 45px;
 }
 
 .footerNav {
   width: auto;
-  padding: 0 80px 24px 0;
+  padding: 0 107px 20px 0;
 }
 
 /****** CSS for Login page ******/
@@ -385,7 +414,7 @@ footer {
   justify-content: center;
   align-items: center;
   height: 59px;
-
+  font-size: 16px;
   width: 100vw;
   margin-left: 50%;
   transform: translateX(-50%);
@@ -396,14 +425,16 @@ footer {
 a.editLink {
   text-align: center;
   position: relative;
-  bottom: 56px;
-  left: 595px;
+  bottom: 102px;
+  left: 600px;
   color: black;
   text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 a.editLink i {
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 .editon i {
@@ -425,7 +456,7 @@ section .hidden {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .modalBody {
@@ -440,19 +471,23 @@ section .hidden {
 .iconesModal {
   display: flex;
   justify-content: space-between;
-  margin: 20px 30px;
+  margin: 26px 30px 10px 30px;
+  align-items: center;
 }
 
 .iconesModal .fa-solid {
-  font-size: 1.3em;
+  font-size: 24px;
+}
+
+.iconesModal .fa-arrow-left {
+  font-size: 21px;
 }
 
 .modal-wrapper {
-  padding: 0 100px 0px 100px;
+  padding: 0 105px 0px 105px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .formWrapper {
@@ -463,26 +498,21 @@ section .hidden {
 }
 
 .modal-wrapper h3 {
-  font-size: 2em;
+  font-size: 26px;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 46px;
 }
 
-.modal-wrapper .fa-xmark {
-  width: 100%;
-  text-align: end;
-  position: relative;
-  bottom: 30px;
-  left: 70px;
-  font-size: 1.4em;
+.modal-wrapper #addModalTitle {
+  margin-bottom: 36px;
 }
 
 .galleryModif {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-column-gap: 12px;
-  grid-row-gap: 12px;
+  grid-column-gap: 8px;
+  grid-row-gap: 0px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -493,12 +523,17 @@ section .hidden {
 
 .galleryModif i {
   position: relative;
-  bottom: 96px;
-  left: 48px;
+  bottom: 102px;
+  left: 55px;
   color: white;
   background-color: black;
-  padding: 4px;
-  border-radius: 5px;
+  padding: 4px 4px 2px 4px;
+  border-radius: 2px;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  width: 9px;
+  height: 11px;
 }
 
 .addWorkWrapper {
@@ -509,13 +544,15 @@ section .hidden {
 }
 
 .fileUploadWrapper {
-  background-color: rgb(223, 232, 245);
+  background-color: #e8f1f6;
   display: flex;
+  justify-content: flex-end;
   flex-direction: column;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 3px;
   min-height: 169px;
   max-height: 169px;
+  margin-bottom: 9px;
 }
 
 .fileUploadWrapper img {
@@ -531,15 +568,21 @@ section .hidden {
 .titleAndCategory input,
 .titleAndCategory select {
   height: 50px;
-  font-size: 1.2em;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Work sans";
+  color: #444444;
   border: none;
-  width: 100%;
   appearance: none;
   padding-left: 16px;
 }
 
-.titleAndCategory input:-webkit-autofill,
-.titleAndCategory input:-webkit-autofill:focus {
+.titleAndCategory select {
+  width: 100%;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
   transition: background-color 0s 600000s, color 0s 600000s;
 }
 
@@ -559,10 +602,11 @@ section .hidden {
 .titleAndCategory .categoryAndArrow {
   display: flex;
   align-items: center;
+  color: #444444;
 }
 
 .titleAndCategory .categoryAndArrow i {
-  width: 10%;
+  margin-right: 28px;
 }
 
 .titleAndCategory select:active {
@@ -570,7 +614,7 @@ section .hidden {
   border: none;
 }
 .titleAndCategory label {
-  margin: 2em 0 1em 0;
+  margin: 21px 0 10px 0;
 }
 .titleAndCategory textarea {
   border: none;
@@ -578,16 +622,17 @@ section .hidden {
 }
 
 .fileUploadWrapper i {
-  color: grey;
-  font-size: 4em;
-  margin: 20px 0 12px 0;
+  color: #cbd6dc;
+  font-size: 76px;
+  margin-bottom: 6px;
 }
 
 .fileUploadWrapper label {
-  background-color: grey;
-  padding: 8px 28px 8px 28px;
+  background-color: #cbd6dc;
+  padding: 10px 33px;
   border-radius: 50px;
-  color: rgb(62, 98, 149);
+  font-size: 14px;
+  color: #306685;
 }
 
 .addWorkWrapper {
@@ -597,15 +642,17 @@ section .hidden {
 
 .fileUploadWrapper p {
   font-size: 12px;
-  margin-top: 4px;
+  margin-top: 7px;
+  margin-bottom: 19px;
 }
 
 .inputAddWrapper,
 .inputAddValidateWrapper {
   display: flex;
-  border-top: 2px solid gray;
+  border-top: 1px solid #b3b3b3;
   align-items: center;
-  height: 120px;
+  padding: 38px 0 45px 0;
+  margin-top: auto;
 }
 
 .inputAddWrapper input,
@@ -615,10 +662,24 @@ section .hidden {
   padding-bottom: 0.5em;
 }
 
+.modalBody input[type="submit"] {
+  margin: 0 auto;
+  font-size: 14px;
+  padding: 10px 49px;
+  width: 237px;
+}
+
 #imageUpload {
   display: none;
 }
 
+.invalidFile {
+  color: red;
+}
+
+.noFilters {
+  margin-bottom: 76px;
+}
 .inputAddValidateWrapper .disabled {
   background-color: gray;
 }

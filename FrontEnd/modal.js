@@ -5,6 +5,7 @@ export function showModal() {
   const linkModal = document.querySelector(".editLink");
   linkModal.addEventListener("click", (event) => {
     event.preventDefault();
+    preventTabFocus();
     createModalEdit();
   });
 }
@@ -17,6 +18,7 @@ function createModalEdit() {
   const closeCross = document.querySelector(".fa-xmark");
   closeCross.addEventListener("click", () => {
     modalBody.remove();
+    allowTabFocus();
   });
   const addProject = document.querySelector(".addNewWork");
   addProject.addEventListener("click", (event) => {
@@ -37,6 +39,7 @@ function createModalAdd() {
   const closeCross = document.querySelector(".fa-xmark");
   closeCross.addEventListener("click", () => {
     modalBody.remove();
+    allowTabFocus();
   });
   const returnArrow = document.querySelector(".fa-arrow-left");
   returnArrow.addEventListener("click", () => {
@@ -54,6 +57,7 @@ function modalBaseBody() {
   modalBody.classList.add("modal");
   modalBody.addEventListener("click", () => {
     modalBody.remove();
+    allowTabFocus();
   });
 }
 
@@ -92,7 +96,7 @@ function modalAddHtml() {
         <div class="fileUploadWrapper">
           <i class="fa-regular fa-image"></i>
           
-          <input type="file" name="imageUpload" id="imageUpload" accept=".png"/>
+          <input type="file" name="imageUpload" id="imageUpload" accept=".png,.jpg"/>
           <label for="imageUpload" id="imageUploadLabel">+ Ajouter photo</label>
           <p>jpg, png : 4mo max</p>
         </div>
@@ -156,7 +160,6 @@ function deleteWork() {
   const allTrashCans = document.querySelectorAll(".fa-trash-can");
   for (let i = 0; i < allTrashCans.length; i++) {
     allTrashCans[i].addEventListener("click", async (event) => {
-      console.log(allTrashCans[i].dataset.id);
       const idDelete = allTrashCans[i].dataset.id;
       const deleteWorkById = await fetch(
         `http://localhost:5678/api/works/${allTrashCans[i].dataset.id}`,
@@ -173,7 +176,6 @@ function deleteWork() {
         deleteFromModif(event, idDelete);
         deleteFromGalery(idDelete);
       }
-      console.log(deleteWorkById);
     });
   }
 }
@@ -181,14 +183,13 @@ function deleteWork() {
 //Delete from modif List
 function deleteFromModif(event, idDelete) {
   const newArrayOfWork = JSON.parse(window.localStorage.getItem("arrayWorks"));
-  console.log(newArrayOfWork);
+
   for (let i = newArrayOfWork.length - 1; i >= 0; i--) {
     if (newArrayOfWork[i].id == idDelete) {
       newArrayOfWork.splice([i], 1);
       const figureToDelete = event.target.parentElement;
-      console.log(event.target.parentElement);
+
       figureToDelete.remove();
-      console.log("Ok");
     }
   }
   window.localStorage.setItem("arrayWorks", JSON.stringify(newArrayOfWork));
@@ -198,10 +199,8 @@ function deleteFromModif(event, idDelete) {
 function deleteFromGalery(idDelete) {
   const listWorks = document.querySelectorAll(".gallery figure");
   for (let i = listWorks.length - 1; i > 0; i--) {
-    console.log(listWorks[i].dataset.workId);
     if (listWorks[i].dataset.workId == idDelete) {
       listWorks[i].remove();
-      console.log("hello");
     }
   }
 }
@@ -211,13 +210,13 @@ function addANewWork() {
   const imageShow = document.querySelector("#imageUpload");
   imageShow.addEventListener("change", () => {
     if (getSize(imageShow.files[0])) {
-      window.alert("Image trop lourde : 4Mo maximum");
+      invalidFile("Image trop lourde : 4Mo maximum");
     } else if (!getExtension(imageShow.files[0])) {
-      window.alert("Format d'image invalide, .png requis");
+      invalidFile("Format d'image invalide, .png ou .jpg requis");
     } else {
       const fileWrapper = document.querySelector(".fileUploadWrapper");
       const imageURL = imageShow.files[0];
-      console.log(imageURL);
+
       const iRemove = document.querySelector(".fa-image");
       iRemove.remove();
       const labelRemove = document.querySelector("#imageUploadLabel");
@@ -244,8 +243,11 @@ function addANewWork() {
 //Function to check in the uploaded image is a PNG
 function getExtension(file) {
   const extension = file.name.split(".");
-  console.log(extension);
-  if (extension[extension.length - 1] === "png") {
+
+  if (
+    extension[extension.length - 1] === "png" ||
+    extension[extension.length - 1] === "jpg"
+  ) {
     return true;
   } else {
     return false;
@@ -254,7 +256,7 @@ function getExtension(file) {
 
 function getSize(file) {
   const size = file.size;
-  console.log(size);
+
   if (size > 4000000) {
     return true;
   } else {
@@ -295,7 +297,6 @@ function submitNewWork() {
       },
       body: formData,
     });
-    console.log(sendWork);
     if (sendWork.status === 201) {
       addingNoReload();
       const modal = document.querySelector("aside");
@@ -312,4 +313,39 @@ async function addingNoReload() {
   const token = window.localStorage.getItem("token");
   generateWorks(worksListJson);
   window.localStorage.setItem("arrayWorks", JSON.stringify(worksListJson));
+}
+
+//Function to modify the info text into an alert if the chosed image is invalid
+function invalidFile(errorType) {
+  const pChange = document.querySelector(".fileUploadWrapper p");
+  pChange.classList.add("invalidFile");
+  pChange.innerText = errorType;
+}
+
+//Prevent Tab from focusing outside the modal
+function preventTabFocus() {
+  const listFocusable = arrayFocusable();
+  for (let i = 0; i < listFocusable.length; i++) {
+    listFocusable[i].setAttribute("tabindex", "-1");
+  }
+}
+
+//Function to allow Tab focusing
+function allowTabFocus() {
+  const listFocusable = arrayFocusable();
+  for (let i = 0; i < listFocusable.length; i++) {
+    listFocusable[i].setAttribute("tabindex", "0");
+  }
+}
+
+//Get an array with every Focusable from the main page
+function arrayFocusable() {
+  const listFocusable = [];
+  listFocusable.push(document.querySelector(".loginlink"));
+  listFocusable.push(document.querySelector(".editLink"));
+  listFocusable.push(document.querySelector("#name"));
+  listFocusable.push(document.querySelector("#email"));
+  listFocusable.push(document.querySelector("#message"));
+  listFocusable.push(document.querySelector(".contactSend"));
+  return listFocusable;
 }

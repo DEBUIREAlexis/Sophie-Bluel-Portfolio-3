@@ -8,7 +8,6 @@ import {
 
 //Get Edit Token from local Storage
 const token = window.localStorage.getItem("token");
-console.log(token);
 const editMenu = document.querySelector(".editon");
 const loginLink = document.querySelector(".loginlink");
 if (token === null) {
@@ -48,7 +47,7 @@ if (token === null) {
   generateFilters(worksListJson);
 } else {
   showModal(worksListJson);
+  const h2whithEdit = document.querySelector("#portfolio h2");
+  h2whithEdit.classList.add("noFilters");
 }
 addListenerFilters(worksListJson);
-
-console.log(worksListJson);
