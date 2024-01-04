@@ -307,7 +307,7 @@ function submitNewWork() {
 
 //Adding new works without reload
 // It has to make a call to the Api, it provide the id of the new work
-async function addingNoReload() {
+async function addingNoReload(response) {
   const worksList = await fetch("http://localhost:5678/api/works");
   const worksListJson = await worksList.json();
   const token = window.localStorage.getItem("token");

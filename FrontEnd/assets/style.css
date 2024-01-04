@@ -373,7 +373,7 @@ input[type="submit"] {
 #loginform input[type="submit"] {
   margin-top: 5px;
 }
-f input[type="submit"]:hover {
+input[type="submit"]:hover {
   background-color: #0e2f28;
 }
 
