@@ -34,12 +34,8 @@ submitForm.addEventListener("click", async function (event) {
       failToConnect.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
     }
   } else {
-    if (userEmail === "") {
-      invalidEmail(true);
-    }
-    if (userPassword === "") {
-      invalidPassword(true);
-    }
+    const failToConnect = document.querySelector(".failToConnect");
+    failToConnect.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
   }
 });
 
@@ -49,22 +45,7 @@ function mailChange(regex) {
   mail.addEventListener("change", () => {
     const failToConnect = document.querySelector(".failToConnect");
     failToConnect.innerHTML = "";
-    if (!regex.test(mail.value)) {
-      invalidEmail(true);
-    } else {
-      invalidEmail(false);
-    }
   });
-}
-
-//Function to display an error if the email is invalid, and delete if OK
-function invalidEmail(bool) {
-  const displayMsg = document.querySelector(".inEmail");
-  if (bool) {
-    displayMsg.innerHTML = "<span>Mail invalide</span>";
-  } else {
-    displayMsg.innerHTML = "";
-  }
 }
 
 //Check if change in Password
@@ -74,20 +55,5 @@ function passwordChange() {
   password.addEventListener("change", () => {
     const failToConnect = document.querySelector(".failToConnect");
     failToConnect.innerHTML = "";
-    if (password.value.length < 2) {
-      invalidPassword(true);
-    } else {
-      invalidPassword(false);
-    }
   });
-}
-
-//Function to display if password invalid : less than 2 character, and delete if OK
-function invalidPassword(bool) {
-  const displayMsg = document.querySelector(".inPassword");
-  if (bool) {
-    displayMsg.innerHTML = "<span>Mot de passe invalide</span>";
-  } else {
-    displayMsg.innerHTML = "";
-  }
 }

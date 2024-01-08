@@ -181,6 +181,12 @@ h2 {
   color: #1d6154;
 }
 
+a,
+input,
+button {
+  cursor: pointer;
+}
+
 nav {
   display: flex;
   align-items: center;
