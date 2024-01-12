@@ -37,6 +37,15 @@ function galleryIdividualWork(workSingle) {
   gallery.appendChild(workBody);
 }
 
+function moveToHash() {
+  let urlHash = window.location.hash;
+
+  if (urlHash) {
+    window.location.hash = "";
+    window.location.hash = urlHash;
+  }
+}
+
 // Main Script
 // Get the works from the database
 const worksList = await fetch("http://localhost:5678/api/works");
@@ -51,3 +60,6 @@ if (token === null) {
   h2whithEdit.classList.add("noFilters");
 }
 addListenerFilters(worksListJson);
+setTimeout(function () {
+  moveToHash();
+}, 80);

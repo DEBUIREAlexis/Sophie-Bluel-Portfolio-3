@@ -31,10 +31,10 @@ function createModalEdit() {
   deleteWork();
 }
 
-function createModalAdd() {
+async function createModalAdd() {
   modalBaseBody();
   const modalBody = document.querySelector(".modal");
-  modalBody.innerHTML = modalAddHtml();
+  modalBody.innerHTML = await modalAddHtml();
   preventClosing();
   const closeCross = document.querySelector(".fa-xmark");
   closeCross.addEventListener("click", () => {
@@ -81,7 +81,20 @@ function modalEditHtml() {
   return HTMLcode;
 }
 
-function modalAddHtml() {
+async function getCategoryFromAPI() {
+  const categoryList = await fetch("http://localhost:5678/api/categories");
+  const categoryListJson = await categoryList.json();
+  let categories = "";
+  for (let i = 0; i < categoryListJson.length; i++) {
+    categories += `<option value='${categoryListJson[i].id}'>${categoryListJson[i].name}</option>`;
+  }
+
+  return categories;
+}
+
+async function modalAddHtml() {
+  const categories = await getCategoryFromAPI();
+  console.log(categories);
   const HTMLcode = `
   <div class="modalBody">
     <div class="iconesModal">
@@ -107,9 +120,7 @@ function modalAddHtml() {
           <div class="categoryAndArrow">
             <select id="category" name="category">
               <option disabled selected value></option>
-              <option value="1">Objets</option>
-              <option value="2">Appartements</option>
-              <option value="3">Hotels & restaurants</option>
+              ${categories}
             </select>
             <i class="fa-solid fa-angle-down"></i>
           </div>
