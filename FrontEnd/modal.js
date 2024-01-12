@@ -94,7 +94,6 @@ async function getCategoryFromAPI() {
 
 async function modalAddHtml() {
   const categories = await getCategoryFromAPI();
-  console.log(categories);
   const HTMLcode = `
   <div class="modalBody">
     <div class="iconesModal">
